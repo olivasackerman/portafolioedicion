@@ -1,1 +1,312 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio Edición | Olivas Ackerman</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --bg-pure-black: #000000; 
+            --bg-navy-dark: #000308; 
+            --card-dark: #111114; 
+            --accent-steel: #8e949e; 
+            --text-silver: #d1d5db; 
+            --text-white: #ffffff;
+            --border-dark: #1f1f24; 
+        }
 
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-pure-black);
+            color: var(--text-white);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* --- Header --- */
+        .page-header {
+            padding: 60px 20px 30px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85), var(--bg-pure-black)), 
+                        url('assets/img/fondoprincipalpe.jpeg') center/cover no-repeat;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: var(--accent-steel);
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .back-link:hover { transform: translateX(-5px); opacity: 0.8; }
+
+        .profile-mini {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-steel);
+            background: url('assets/img/iconprincipalpe.jpg') center/cover;
+            margin: 0 auto 10px;
+            box-shadow: 0 0 20px rgba(142, 148, 158, 0.3);
+        }
+
+        .header-text-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0;
+            color: var(--text-white);
+            line-height: 1.1;
+        }
+
+        .main-tag {
+            display: inline-block;
+            font-size: 0.6rem;
+            font-weight: 800;
+            color: var(--accent-steel);
+            border: 1px solid rgba(142, 148, 158, 0.4);
+            padding: 2px 10px;
+            border-radius: 4px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 8px;
+            background: rgba(142, 148, 158, 0.05);
+        }
+
+        /* --- Content --- */
+        .content-section {
+            position: relative;
+            z-index: 2;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .drive-card {
+            background-color: var(--card-dark);
+            width: 100%;
+            max-width: 550px;
+            border-radius: 24px;
+            border: 1px solid var(--border-dark);
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .drive-card:hover {
+            transform: translateY(-12px);
+            border-color: var(--accent-steel);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- Vista Previa / Imagen Secundaria --- */
+        .card-preview-box {
+            height: 280px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            background-color: #000;
+        }
+
+        .preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            opacity: 0.8;
+        }
+
+        .drive-card:hover .preview-img {
+            transform: scale(1.08);
+            opacity: 1;
+        }
+
+        .overlay-label {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent-steel);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(142, 148, 158, 0.3);
+            text-transform: uppercase;
+        }
+
+        .card-body {
+            padding: 35px 30px;
+            background: linear-gradient(to bottom, var(--card-dark), #0a0a0c);
+            text-align: center;
+        }
+
+        .card-body i {
+            font-size: 2.5rem;
+            color: var(--accent-steel);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .card-body h2 {
+            margin: 0;
+            font-size: 1.6rem;
+            color: var(--text-white);
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .card-body p {
+            color: #888;
+            font-size: 0.95rem;
+            margin: 12px 0 0;
+            line-height: 1.5;
+        }
+
+        .btn-view {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 14px 40px;
+            background: transparent;
+            border: 1px solid var(--accent-steel);
+            color: var(--accent-steel);
+            border-radius: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .drive-card:hover .btn-view {
+            background: var(--accent-steel);
+            color: var(--bg-pure-black);
+            box-shadow: 0 0 20px rgba(142, 148, 158, 0.4);
+        }
+
+        footer {
+            padding: 25px 20px;
+            text-align: center;
+            background-color: var(--bg-navy-dark);
+            color: #444;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .corp-name { color: var(--accent-steel); font-weight: 700; text-transform: uppercase; }
+
+        @media (max-width: 768px) {
+            .back-link { left: 50%; transform: translateX(-50%); top: 20px; }
+            .page-header { padding-top: 100px; }
+            .card-preview-box { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+
+    <header class="page-header">
+        <a href="https://olivasackerman.github.io/" class="back-link"><i class="fas fa-arrow-left"></i> LOBBY</a>
+        <div class="profile-mini"></div>
+        <div class="header-text-group">
+            <h1 class="section-title">Portafolio</h1>
+            <div class="main-tag">Edición de Video</div>
+        </div>
+    </header>
+
+    <section class="content-section">
+        <a href="https://drive.google.com/drive/folders/1te7I1WWALOGbn4CZjgZV43k93MV-iCDU?usp=sharing" target="_blank" class="drive-card">
+            <div class="card-preview-box">
+                <img src="assets/img/fondosecundariope.jpg" alt="Vista previa portafolio" class="preview-img">
+            </div>
+            
+            <div class="card-body">
+                <i class="fab fa-google-drive"></i>
+                <h2>Acceder al Drive</h2>
+                <p>Proyectos terminados, recursos de edición y material exclusivo en alta calidad.</p>
+                <div class="btn-view">Abrir Carpeta</div>
+            </div>
+        </a>
+    </section>
+
+    <footer>
+        &copy; 2026 | Desarrollado por <span class="corp-name">Olivas Corporation</span>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < 50; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 1.2,
+                    speedY: Math.random() * 0.3 + 0.1,
+                    opacity: Math.random() * 0.5 + 0.1
+                });
+            }
+        }
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#8e949e'; 
+            particles.forEach(p => {
+                ctx.globalAlpha = p.opacity;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+                p.y -= p.speedY;
+                if (p.y < 0) p.y = canvas.height;
+            });
+            requestAnimationFrame(animate);
+        }
+        window.addEventListener('resize', init);
+        init();
+        animate();
+    </script>
+</body>
+</html>
